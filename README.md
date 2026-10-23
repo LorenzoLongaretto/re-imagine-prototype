@@ -1,58 +1,41 @@
 # Re-imagine
 
-An AI-powered application that transforms ideas and photographs into new visual experiences using generative AI and vision-language models.
+Sube una foto y una IA la reimagina: un modelo de visión la describe y un modelo de difusión genera una imagen nueva a partir de esa descripción.
 
-**Live Demo:** [re-imagine.lorenzolongaretto.workers.dev](https://re-imagine.lorenzolongaretto.workers.dev/)
+**Demo:** [re-imagine.lorenzolongaretto.workers.dev](https://re-imagine.lorenzolongaretto.workers.dev/)
 
-## Overview
+<!-- Aquí: captura o GIF con el antes y después -->
 
-Re-imagine combines image understanding and image generation in a single application. Users can generate images from text prompts, analyze photographs using natural language, or reimagine existing images through AI-generated descriptions.
+## Cómo funciona
 
-The project explores how different AI models can work together to create an interactive, multimodal experience.
+1. **Entrada:** el usuario sube una foto (se reduce en el navegador a 1024 px).
+2. **Comprensión visual:** Llama 3.2 11B Vision Instruct genera un prompt conciso en inglés.
+3. **Generación:** Stable Diffusion XL Lightning crea una imagen nueva a partir de ese prompt.
+4. **Resultado:** se muestran la foto original y la reimaginada.
 
-## Features
+La salida de un modelo se usa como entrada del otro, en una sola petición.
 
-- **Text-to-Image Generation:** Create images from natural-language descriptions.
-- **Image Description:** Upload a photograph and ask questions about its contents. The application analyzes the image and responds in Spanish.
-- **Image Reimagining:** Upload a photograph, generate a textual description of its visual content, and use that description to generate a new image.
-- **Interactive Interface:** Access the different AI capabilities through a single web application.
+## Stack
 
-## How It Works
+- Cloudflare Workers + Workers AI
+- TypeScript, sin dependencias de frontend (HTML/CSS/JS en un solo archivo)
 
-The image reimagining workflow connects two AI models with complementary capabilities:
-
-1. **Image Input:** The user uploads a photograph.
-2. **Visual Understanding:** Llama 3.2 11B Vision Instruct analyzes the image and generates a textual description.
-3. **Image Generation:** Stable Diffusion XL Lightning uses the description as a prompt to generate a new image.
-4. **Result:** The generated image is presented to the user.
-
-This pipeline demonstrates how outputs from one AI model can serve as inputs to another, combining visual understanding and generative capabilities in a single workflow.
-
-## AI Models
-
-| Model | Purpose |
+| Modelo | Función |
 |---|---|
-| Llama 3.2 11B Vision Instruct | Image understanding and textual description generation |
-| Stable Diffusion XL Lightning | Image generation from text prompts |
+| `@cf/meta/llama-3.2-11b-vision-instruct` | Imagen → texto |
+| `@cf/bytedance/stable-diffusion-xl-lightning` | Texto → imagen |
 
+## Ejecutar en local
 
-## Note on AI Models
+    npm install
+    npx wrangler dev
 
-This project uses freely available AI models for demonstration purposes. The quality of the generated images and their similarity to the original input depend largely on the capabilities of the models used.
+Requiere una cuenta de Cloudflare con Workers AI habilitado.
 
-More advanced models may produce more accurate image descriptions and higher-quality results. Therefore, the current output should be considered a demonstration of the workflow rather than a reflection of the full potential of these technologies.
+## Nota sobre los modelos
 
-## Try It Out
+Usa modelos gratuitos de Workers AI. La similitud con la foto original depende de ellos; modelos más potentes darían descripciones y resultados más fieles.
 
-Visit the live application:
+## Autor
 
-**[Open Re-imagine](https://re-imagine.lorenzolongaretto.workers.dev/)**
-
-No local installation is required to try the deployed version.
-
-
-## Author
-
-**Lorenzo Longaretto**
-
-[GitHub](https://github.com/lorenzolongaretto)
+**Lorenzo Longaretto** · [GitHub](https://github.com/lorenzolongaretto)
