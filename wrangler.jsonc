@@ -1,0 +1,6 @@
+{
+  "name": "re-imagine",
+  "main": "src/app/index.ts",
+  "compatibility_date": "2025-01-01",
+  "ai": { "binding": "AI" }
+}
