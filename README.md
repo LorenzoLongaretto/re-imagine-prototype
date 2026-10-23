@@ -1,41 +1,48 @@
 # Re-imagine
 
-Sube una foto y una IA la reimagina: un modelo de visión la describe y un modelo de difusión genera una imagen nueva a partir de esa descripción.
+Upload a photo and let AI reimagine it. A vision model describes the image, and a diffusion model generates a new image based on that description.
 
-**Demo:** [re-imagine.lorenzolongaretto.workers.dev](https://re-imagine.lorenzolongaretto.workers.dev/)
+**Live Demo:** [re-imagine.lorenzolongaretto.workers.dev](https://re-imagine.lorenzolongaretto.workers.dev/)
 
-<!-- Aquí: captura o GIF con el antes y después -->
+<!-- Add a screenshot or GIF showing the original and reimagined images -->
 
-## Cómo funciona
+## How It Works
 
-1. **Entrada:** el usuario sube una foto (se reduce en el navegador a 1024 px).
-2. **Comprensión visual:** Llama 3.2 11B Vision Instruct genera un prompt conciso en inglés.
-3. **Generación:** Stable Diffusion XL Lightning crea una imagen nueva a partir de ese prompt.
-4. **Resultado:** se muestran la foto original y la reimaginada.
+1. **Input:** The user uploads a photo, which is resized in the browser to a maximum dimension of 1024 pixels.
+2. **Visual Understanding:** Llama 3.2 11B Vision Instruct analyzes the image and generates a concise English prompt.
+3. **Image Generation:** Stable Diffusion XL Lightning generates a new image from that prompt.
+4. **Result:** The original photo and the reimagined image are displayed side by side.
 
-La salida de un modelo se usa como entrada del otro, en una sola petición.
+The output of one model feeds directly into the next, creating an automated pipeline that combines visual understanding and image generation in a single request.
 
-## Stack
+## Tech Stack
 
-- Cloudflare Workers + Workers AI
-- TypeScript, sin dependencias de frontend (HTML/CSS/JS en un solo archivo)
+- **Cloudflare Workers** — Serverless application runtime.
+- **Cloudflare Workers AI** — AI model inference.
+- **TypeScript** — Application logic, with a lightweight frontend built using HTML, CSS, and JavaScript in a single file.
 
-| Modelo | Función |
+### AI Models
+
+| Model | Purpose |
 |---|---|
-| `@cf/meta/llama-3.2-11b-vision-instruct` | Imagen → texto |
-| `@cf/bytedance/stable-diffusion-xl-lightning` | Texto → imagen |
+| `@cf/meta/llama-3.2-11b-vision-instruct` | Image-to-text |
+| `@cf/bytedance/stable-diffusion-xl-lightning` | Text-to-image |
 
-## Ejecutar en local
+## Running Locally
 
-    npm install
-    npx wrangler dev
+```bash
+npm install
+npx wrangler dev
+```
 
-Requiere una cuenta de Cloudflare con Workers AI habilitado.
+Requires a Cloudflare account with Workers AI access. Ensure your Wrangler configuration includes the `AI` binding.
 
-## Nota sobre los modelos
+## Note on AI Models
 
-Usa modelos gratuitos de Workers AI. La similitud con la foto original depende de ellos; modelos más potentes darían descripciones y resultados más fieles.
+This project uses freely available models through Cloudflare Workers AI for demonstration purposes. The quality of the generated images depends on the capabilities of the models used.
 
-## Autor
+Since the image generation process relies on a textual description rather than the original image itself, the result may differ significantly from the input. More advanced models could produce more detailed descriptions and higher-quality images.
+
+## Author
 
 **Lorenzo Longaretto** · [GitHub](https://github.com/lorenzolongaretto)
